@@ -42,14 +42,14 @@ main:
 	.set	noreorder
 	.cpload	$25
 	.set	nomacro
-	addiu	$sp,$sp,-112
+	addiu	$sp,$sp,-112    # allocate memory in stack for static variables 
 	sw	$31,108($sp)
 	sw	$fp,104($sp)
-	move	$fp,$sp
+	move	$fp,$sp		#move the top value of stack to frame pointer
 	.cprestore	16
 	movz	$31,$31,$0
 	lw	$2,%got($LC0)($28)
-	addiu	$3,$fp,32
+	addiu	$3,$fp,32         
 	addiu	$2,$2,%lo($LC0)
 	li	$4,36			# 0x24
 	move	$6,$4
@@ -65,7 +65,7 @@ main:
 	lw	$28,16($fp)
 	nop
 	lw	$2,%got($LC1)($28)
-	addiu	$3,$fp,68
+	addiu	$3,$fp,68               #store the value of the address [fp]+68 in the register $3.
 	addiu	$2,$2,%lo($LC1)
 	li	$4,36			# 0x24
 	move	$6,$4
@@ -75,7 +75,7 @@ main:
 	nop
 	move	$25,$2
 	.reloc	1f,R_MIPS_JALR,memcpy
-1:	jalr	$25
+1:	jalr	$25                     #function calling
 	nop
 
 	lw	$28,16($fp)
@@ -125,7 +125,7 @@ $L4:
 	addu	$2,$2,$3
 	sll	$2,$2,2
 	addiu	$3,$fp,24
-	addu	$2,$3,$2
+	addu	$2,$3,$2        #add the values in the registers $2 and $3 and store them in $2
 	sw	$4,8($2)
 	lw	$2,28($fp)
 	nop
@@ -135,7 +135,7 @@ $L3:
 	lw	$2,28($fp)
 	nop
 	slt	$2,$2,3
-	bne	$2,$0,$L4
+	bne	$2,$0,$L4	# branching statement
 	nop
 
 	lw	$2,24($fp)
@@ -153,7 +153,7 @@ $L2:
 	move	$sp,$fp
 	lw	$31,108($sp)
 	lw	$fp,104($sp)
-	addiu	$sp,$sp,112
+	addiu	$sp,$sp,112     #pop all the variables from the stack
 	j	$31
 	nop
 
