@@ -19,7 +19,7 @@ main:
 	.set	noreorder
 	.cpload	$25
 	.set	nomacro
-	addiu	$sp,$sp,-848
+	addiu	$sp,$sp,-848   # allocating space in stack for static variables
 	sw	$31,844($sp)
 	sw	$fp,840($sp)
 	move	$fp,$sp
@@ -51,15 +51,15 @@ $L5:
 	nop
 	sll	$2,$2,2
 	addiu	$3,$fp,24
-	addu	$2,$3,$2
+	addu	$2,$3,$2        #add value of $2 and $3 and store them in $2.
 	lw	$2,12($2)
 	nop
-	bne	$2,$0,$L2
+	bne	$2,$0,$L2        # if the value of $2 is zero then branch to statement to statement L2
 	nop
 
 	lw	$2,24($fp)
 	nop
-	sll	$2,$2,1
+	sll	$2,$2,1          # access the byte memory address of $2
 	sw	$2,32($fp)
 	b	$L3
 	nop
@@ -76,14 +76,14 @@ $L3:
 	lw	$2,32($fp)
 	nop
 	slt	$2,$2,101
-	bne	$2,$0,$L4
+	bne	$2,$0,$L4		 # if the value of $2 is zero then branch to statement to statement L4
 	nop
 
 $L2:
 	lw	$2,24($fp)
 	nop
 	slt	$2,$2,101
-	bne	$2,$0,$L5
+	bne	$2,$0,$L5		 # if the value of $2 is zero then branch to statement to statement L5
 	nop
 
 	sw	$0,28($fp)
@@ -99,7 +99,7 @@ $L8:
 	addu	$2,$3,$2
 	lw	$2,12($2)
 	nop
-	bne	$2,$0,$L7
+	bne	$2,$0,$L7		 # if the value of $2 is zero then branch to statement to statement L7
 	nop
 
 	lw	$3,28($fp)
@@ -132,7 +132,7 @@ $L6:
 	move	$sp,$fp
 	lw	$31,844($sp)
 	lw	$fp,840($sp)
-	addiu	$sp,$sp,848
+	addiu	$sp,$sp,848		#clear the stack space
 	j	$31
 	nop
 
