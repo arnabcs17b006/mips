@@ -18,15 +18,15 @@ main:
 	.fmask	0x00000000,0
 	.set	noreorder
 	.set	nomacro
-	addiu	$sp,$sp,-48
-	sw	$fp,44($sp)
-	move	$fp,$sp
+	addiu	$sp,$sp,-48             #allocate memory for static variables in stack
+	sw	$fp,44($sp)             #store value of fp in the address [fp]+44
+	move	$fp,$sp                 #move $sp to $fp
 	li	$2,5			# 0x5
-	sw	$2,12($fp)
+	sw	$2,12($fp)              #store value of $2 in the address [fp]+12
 	movz	$31,$31,$0
-	li	$2,2			# 0x2
-	sw	$2,16($fp)
-	li	$2,1			# 0x1
+	li	$2,2			# load the value 2 in $2
+	sw	$2,16($fp)              # store the value of $2 in the address [fp]+16
+	li	$2,1			# load the value 1 in $2
 	sw	$2,20($fp)
 	li	$2,2			# 0x2
 	sw	$2,24($fp)
@@ -44,8 +44,8 @@ $L3:
 	lw	$2,8($fp)
 	nop
 	sll	$2,$2,2
-	addiu	$3,$fp,8
-	addu	$2,$3,$2
+	addiu	$3,$fp,8         #add 8 to the value of $fp and the store the result in $3
+	addu	$2,$3,$2	 #add value of $2 to the value of $3 and the store the result in $2
 	lw	$3,12($2)
 	lw	$2,16($fp)
 	nop
@@ -64,14 +64,14 @@ $L2:
 	lw	$3,8($fp)
 	lw	$2,12($fp)
 	nop
-	slt	$2,$3,$2
-	bne	$2,$0,$L3
+	slt	$2,$3,$2 	#if value in $3 is less than value in $2 then value of $2 is 1 else 0
+	bne	$2,$0,$L3	#if value of $2 is 0 then jump to L3
 	nop
 
 	move	$2,$0
 	move	$sp,$fp
 	lw	$fp,44($sp)
-	addiu	$sp,$sp,48
+	addiu	$sp,$sp,48	#clear the stack
 	j	$31
 	nop
 
