@@ -19,8 +19,8 @@ main:
 	.set	noreorder
 	.cpload	$25
 	.set	nomacro
-	addiu	$sp,$sp,-464
-	sw	$31,460($sp)
+	addiu	$sp,$sp,-464		# update the stack for static variables
+	sw	$31,460($sp)		#store the value in the register $31 in the address [sp]+460 in stack
 	sw	$fp,456($sp)
 	move	$fp,$sp
 	.cprestore	16
@@ -29,9 +29,9 @@ main:
 	sw	$2,32($fp)
 	addiu	$2,$fp,48
 	li	$6,404			# 0x194
-	move	$5,$0
+	move	$5,$0			# move the value of $0 to $5
 	move	$4,$2
-	lw	$2,%call16(memset)($28)
+	lw	$2,%call16(memset)($28)	# initialize the array
 	nop
 	move	$25,$2
 	.reloc	1f,R_MIPS_JALR,memset
@@ -51,12 +51,12 @@ main:
 $L5:
 	lw	$2,36($fp)
 	nop
-	sll	$2,$2,2
+	sll	$2,$2,2                  #store the addrss of second word of the array in $2
 	addiu	$3,$fp,24
 	addu	$2,$3,$2
 	lw	$2,24($2)
 	nop
-	bne	$2,$0,$L2
+	bne	$2,$0,$L2                #if value in $2 not equal to 0 then  branch to L2
 	nop
 
 	lw	$2,36($fp)
